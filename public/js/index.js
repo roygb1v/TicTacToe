@@ -1,9 +1,9 @@
 $(document).ready(function() {
-  var x = "x";
-  var o = "o";
-  var count = 0;
-  var o_win = 0;
-  var x_win = 0;
+  let x = "x";
+  let o = "o";
+  let count = 0;
+  let o_win = 0;
+  let x_win = 0;
 
   let WINNING_TILES = [
     ["one", "two", "three"],
@@ -69,14 +69,9 @@ $(document).ready(function() {
         alert("This is already selected!");
         return;
       }
-  
+
       count += 1;
-      if (count === 9) {
-        alert("It's a tie!");
-        stopGame();
-        return;
-      };
-  
+      
       if (count % 2 === 0) {
         $(this).text(x);
         $(this).addClass("disable");
@@ -88,6 +83,12 @@ $(document).ready(function() {
         O_winning_tiles.push($(this).attr('id'));
         checkWinningTiles(o)
       }
+
+      if (count === 9) {
+        alert("It's a tie!");
+        stopGame();
+        return;
+      };
     })
   }
 
