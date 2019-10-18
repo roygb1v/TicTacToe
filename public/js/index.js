@@ -55,6 +55,7 @@ $(document).ready(function() {
         stopGame();
       }
     });
+    return validWin;
   }
 
   const stopGame = () => {
@@ -71,17 +72,17 @@ $(document).ready(function() {
       }
 
       count += 1;
-      
+
       if (count % 2 === 0) {
         $(this).text(x);
         $(this).addClass("disable");
         X_winning_tiles.push($(this).attr('id'));
-        checkWinningTiles(x);
+        if (checkWinningTiles(x)) return;
       } else {
         $(this).text(o);
         $(this).addClass("disable");
         O_winning_tiles.push($(this).attr('id'));
-        checkWinningTiles(o)
+        if (checkWinningTiles(o)) return;
       }
 
       if (count === 9) {
