@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="prefetch" href="https://getbootstrap.com/2.3.2/assets/css/bootstrap.css"/>
+  <link rel="stylesheet" href="./style/style.css">
+  <title>Tic-Tac-Toe Game</title>
+</head>
+<body>
+  <div id="tic-tac-toe">
+    <div class="span3 new_span">
+      <div class="row">
+        <h1 class="span3">Tic Tac Toe</h1>
+        <div class="span3">
+          <div class="score">
+            <span>O won <strong id="o_win">0</strong> time(s)</span>
+          </div>
+          <div class="score"></div>
+            <span>X won <strong id="x_win">0</strong> time(s)</span>
+          </div>
+        </div>
+      </div>
+      <div class="game">
+        <div class="column">
+          <span class="square" id="one">+</span>
+          <span class="square" id="two">+</span>
+          <span class="square" id="three">+</span>
+        </div>
+        <div class="column">
+          <span class="square" id="four">+</span>
+          <span class="square" id="five">+</span>
+          <span class="square" id="six">+</span>
+        </div>
+        <div class="column">
+          <span class="square" id="seven">+</span>
+          <span class="square" id="eight">+</span>
+          <span class="square" id="nine">+</span>
+        </div>
+      </div>
+
+      <div class="clr">&nbsp;</div>
+      <div class="btn"><a href="#" id="clear-board">Clear Board</a></div>
+      <div class="btn"><a href="#" id="reset-score">Reset Score</a></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
