@@ -20,8 +20,6 @@ $(document).ready(function() {
   let O_winning_tiles = [];
   let X_winning_tiles = [];
 
-  const checkWinningTiles = (typeOfWinningTile) => typeOfWinningTile === "x" ? winner(X_winning_tiles, x) : winner(O_winning_tiles, o);
-
   const resetTiles = () => {
     O_winning_tiles = [];
     X_winning_tiles = [];
@@ -37,25 +35,7 @@ $(document).ready(function() {
   const resetBoard = () => {
     $(".square").text("+");
     $(".square").removeClass("disable");
-  }
-
-  const winner = (tiles, tileType="x") => {
-    let validWin;
-    WINNING_TILES.forEach(function(row) {
-      validWin = row.every(piece => tiles.includes(piece));
-      if (validWin && tileType === "x") {
-        $("#x_win").text(x_win += 1);
-        currentWinner = "x";
-        alert('X wins! Please restart to play again!');
-        stopGame();
-      } else if (validWin) {
-        $("#o_win").text(o_win += 1);
-        currentWinner = "o";
-        alert('O wins! Please restart to play again!');
-        stopGame();
-      }
-    });
-    return currentWinner;
+    currentWinner = "+";
   }
 
   const stopGame = () => {
@@ -64,41 +44,12 @@ $(document).ready(function() {
     })
   }
 
-  const startGame = () => {
-    $(".square").click(function() {
-      if ($(this).hasClass("disable")) {
-        return alert("This is already selected!");
-      }
-
-      count += 1;
-
-      if (count % 2 === 0) {
-        $(this).text(x);
-        $(this).addClass("disable");
-        X_winning_tiles.push($(this).attr('id'));
-        if (checkWinningTiles(x) === "x") return;
-      } else {
-        $(this).text(o);
-        $(this).addClass("disable");
-        O_winning_tiles.push($(this).attr('id'));
-        if (checkWinningTiles(o) === "o") return;
-      }
-
-      // Check if board is full then check the current winner
-      if (count === 9) {
-        if (currentWinner === "+") {
-          return alert("It is a tie!");
-        }
-      }
-    })
-  }
-
   $("#clear-board").click(function(e) {
     e.preventDefault();
     resetBoard();
     resetTiles();
-    startGame();
     count = 0;
+    startGame();
   });
 
   $("#reset-score").click(function(e) {
@@ -106,9 +57,60 @@ $(document).ready(function() {
     resetScore();
     resetBoard();
     resetTiles();
-    startGame();
     count = 0;
+    startGame();
   })
+
+  const checkWinner = () => {
+    for (let i = 0; i < WINNING_TILES.length; i += 1) {
+      let row = WINNING_TILES[i];
+      if (row.every(piece => X_winning_tiles.includes(piece))) {
+        stopGame();
+        return currentWinner = "x";
+      }
+      if (row.every(piece => O_winning_tiles.includes(piece))) {
+        stopGame();
+        return currentWinner = "o";
+      }
+    }
+    return "+";
+  }
+
+  const startGame = () => {
+    $(".square").click(function() {
+      if ($(this).hasClass("disable")) {
+        return alert("This is already selected!");
+      }
+      count += 1;
   
+      if (count % 2 === 0) {
+        $(this).text(x);
+        $(this).addClass("disable");
+        X_winning_tiles.push($(this).attr('id'));
+        if (checkWinner() === "x") {
+          $("#x_win").text(x_win += 1);
+          return alert("X wins! Please restart to play again!");
+        }
+      } else {
+        $(this).text(o);
+        $(this).addClass("disable");
+        O_winning_tiles.push($(this).attr('id'));
+        if (checkWinner() === "o") {
+          $("#o_win").text(o_win += 1);
+          return alert("O wins! Please restart to play again!");
+        }
+      }
+  
+      if (count === 9) {
+        if (checkWinner() === "+") {
+          return alert("It's a tie! Please restart to play again!");
+        } else if (checkWinner() === "x") {
+          return alert("X wins! Please restart to play again!");
+        } else if (checkWinner() === "o") {
+          return alert("O wins! Please restart to play again!");
+        }
+      }
+    })
+  }
   startGame();
-});
+})
