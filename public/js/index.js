@@ -34,7 +34,11 @@ $(document).ready(function() {
 
   const resetBoard = () => {
     $(".square").text("+");
-    $(".square").removeClass("disable");
+    $.each($(".square"), function(index, value) {
+      if ($(value).hasClass("disable")) {
+        $(value).removeClass("disable");
+      }
+    });
     currentWinner = "+";
   }
 
@@ -59,7 +63,7 @@ $(document).ready(function() {
     resetTiles();
     count = 0;
     startGame();
-  })
+  });
 
   const checkWinner = () => {
     for (let i = 0; i < WINNING_TILES.length; i += 1) {
@@ -103,7 +107,8 @@ $(document).ready(function() {
   
       if (count === 9) {
         if (checkWinner() === "+") {
-          return alert("It's a tie! Please restart to play again!");
+          alert("It's a tie! Please restart to play again!");
+          return; 
         } else if (checkWinner() === "x") {
           return alert("X wins! Please restart to play again!");
         } else if (checkWinner() === "o") {

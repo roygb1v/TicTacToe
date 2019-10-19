@@ -43,7 +43,7 @@ body {
   text-transform: uppercase;
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #E85A4F;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
 }
 
 #tic-tac-toe {
