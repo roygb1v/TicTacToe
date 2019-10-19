@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  let currentWinner = "+"
   let x = "x";
   let o = "o";
   let count = 0;
@@ -39,23 +40,22 @@ $(document).ready(function() {
   }
 
   const winner = (tiles, tileType="x") => {
+    let validWin;
     WINNING_TILES.forEach(function(row) {
-      const validWin = row.every(piece => tiles.includes(piece));
+      validWin = row.every(piece => tiles.includes(piece));
       if (validWin && tileType === "x") {
-        x_win += 1;
-        $("#x_win").text(x_win);
+        $("#x_win").text(x_win += 1);
+        currentWinner = "x";
         alert('X wins! Please restart to play again!');
-        resetTiles();
         stopGame();
       } else if (validWin) {
-        o_win += 1;
-        $("#o_win").text(o_win);
+        $("#o_win").text(o_win += 1);
+        currentWinner = "o";
         alert('O wins! Please restart to play again!');
-        resetTiles();
         stopGame();
       }
     });
-    return validWin;
+    return currentWinner;
   }
 
   const stopGame = () => {
@@ -67,8 +67,7 @@ $(document).ready(function() {
   const startGame = () => {
     $(".square").click(function() {
       if ($(this).hasClass("disable")) {
-        alert("This is already selected!");
-        return;
+        return alert("This is already selected!");
       }
 
       count += 1;
@@ -77,19 +76,20 @@ $(document).ready(function() {
         $(this).text(x);
         $(this).addClass("disable");
         X_winning_tiles.push($(this).attr('id'));
-        if (checkWinningTiles(x)) return;
+        if (checkWinningTiles(x) === "x") return;
       } else {
         $(this).text(o);
         $(this).addClass("disable");
         O_winning_tiles.push($(this).attr('id'));
-        if (checkWinningTiles(o)) return;
+        if (checkWinningTiles(o) === "o") return;
       }
 
+      // Check if board is full then check the current winner
       if (count === 9) {
-        alert("It's a tie!");
-        stopGame();
-        return;
-      };
+        if (currentWinner === "+") {
+          return alert("It is a tie!");
+        }
+      }
     })
   }
 
@@ -109,6 +109,6 @@ $(document).ready(function() {
     startGame();
     count = 0;
   })
-
+  
   startGame();
 });
