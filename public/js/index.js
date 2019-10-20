@@ -35,6 +35,7 @@ $(document).ready(function() {
   const resetBoard = () => {
     $(".square").text("+");
     $.each($(".square"), function(index, value) {
+      console.log(index, value);
       if ($(value).hasClass("disable")) {
         $(value).removeClass("disable");
       }
@@ -81,10 +82,12 @@ $(document).ready(function() {
   }
 
   const startGame = () => {
+
     $(".square").click(function() {
       if ($(this).hasClass("disable")) {
         return alert("This is already selected!");
       }
+
       count += 1;
   
       if (count % 2 === 0) {
@@ -108,14 +111,23 @@ $(document).ready(function() {
       if (count === 9) {
         if (checkWinner() === "+") {
           alert("It's a tie! Please restart to play again!");
-          return; 
         } else if (checkWinner() === "x") {
-          return alert("X wins! Please restart to play again!");
+          alert("X wins! Please restart to play again!");
         } else if (checkWinner() === "o") {
-          return alert("O wins! Please restart to play again!");
+          alert("O wins! Please restart to play again!");
         }
       }
     })
   }
   startGame();
 })
+
+
+
+
+
+  // $.each($(".square"), function(index, value) {
+  //   if ($(value).hasClass("disable")) {
+  //     return alert("This is already selected!");
+  //   }
+  // })
