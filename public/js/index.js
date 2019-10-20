@@ -35,7 +35,6 @@ $(document).ready(function() {
   const resetBoard = () => {
     $(".square").text("+");
     $.each($(".square"), function(index, value) {
-      console.log(index, value);
       if ($(value).hasClass("disable")) {
         $(value).removeClass("disable");
       }
@@ -108,9 +107,11 @@ $(document).ready(function() {
         }
       }
   
+      // If board is full, check if it's a tie.
       if (count === 9) {
         if (checkWinner() === "+") {
           alert("It's a tie! Please restart to play again!");
+          stopGame();
         } else if (checkWinner() === "x") {
           alert("X wins! Please restart to play again!");
         } else if (checkWinner() === "o") {
@@ -120,14 +121,4 @@ $(document).ready(function() {
     })
   }
   startGame();
-})
-
-
-
-
-
-  // $.each($(".square"), function(index, value) {
-  //   if ($(value).hasClass("disable")) {
-  //     return alert("This is already selected!");
-  //   }
-  // })
+});
